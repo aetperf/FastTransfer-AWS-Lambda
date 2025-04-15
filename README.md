@@ -1,13 +1,21 @@
 # FastTransfer-AWS-Lambda
 
+This project demonstrates how to package and deploy the `FastTransfer` binary inside an AWS Lambda function using a custom Docker image. The goal is to automate and scale the execution of the `FastTransfer` tool in a serverless environment.  
+By containerizing the binary and its configuration, we can take full advantage of Lambda's flexibility while keeping deployment simple and reproducible.
+
+The `FastTransfer` binary is a compiled .NET application designed to move data between different types of databases.  
+This guide walks through the steps needed to build a Docker image containing the executable, upload it to Amazon ECR, and deploy it as a Lambda function using the AWS CLI.
+
+---
+
 # Steps to Deploy the Application
 
 ## 1. Prepare the Code and Necessary Files
 Make sure you have the following files in your project:
 
 - **FastTransfer**: The compiled binary of `FastTransfer` link to the page [FastTransfer documentation](https://aetperf.github.io/FastTransfer-Documentation/).
-- **FastTransfer_Settings.json**: The JSON configuration file for the application.
-- **handler.py**: The Python script that serves as the entry point for AWS Lambda. You need to modify the parameters inside this file
+- **FastTransfer_Settings.json**: The JSON configuration file for the application to logs the result of the execution on a MSSQL instance. (You can modify the configuration)
+- **handler.py**: The Python script that serves as the entry point for AWS Lambda. You need to modify the parameters inside this file if you want a custom execution
 
 ## 2. Create the Dockerfile
 Create a file named `Dockerfile` and add the following content:
@@ -73,11 +81,10 @@ Create a Lambda function using the Docker image you've just pushed:
 aws lambda create-function \
   --function-name FastTransferLambda \
   --package-type Image \
-  --image-uri <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/fasttransfer-lambda-repo:latest \
+  --code ImageUri=<aws_account_id>.dkr.ecr.eu-west-1.amazonaws.com/fasttransfer-lambda-repo:latest \
   --role arn:aws:iam::<aws_account_id>:role/<lambda_execution_role> \
   --timeout 120 \
   --memory-size 5000 \
-  --ephemeral-storage 10000
 ```
 Replace `<aws_account_id>` with your AWS account ID and `<lambda_execution_role>` with the IAM role that has the necessary permissions to run Lambda.
 
