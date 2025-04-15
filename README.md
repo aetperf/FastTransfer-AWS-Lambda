@@ -21,7 +21,6 @@ RUN dnf install -y icu libicu
 # Set necessary environment variables
 ENV HOME=/tmp
 ENV DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true  # Optional, use it to disable globalization support
 
 # Copy necessary files into the container
 COPY FastTransfer /var/task/FastTransfer
@@ -52,16 +51,40 @@ aws ecr create-repository --repository-name fasttransfer-lambda-repo
 
 ### 2. Authenticate Docker with ECR:
 ```bash
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.eu-west-1.amazonaws.com
 ```
 Replace `<aws_account_id>` with your AWS account ID.
 
 ### 3. Tag the Docker image to push it to ECR:
 ```bash
-docker tag fasttransfer-lambda-image:latest <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/fasttransfer-lambda-repo:latest
+docker tag fasttransfer-lambda-image:latest <aws_account_id>.dkr.ecr.eu-west-1.amazonaws.com/fasttransfer-lambda-repo:latest
 ```
 
 ### 4. Push the Docker image to your ECR repository:
 ```bash
-docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/fasttransfer-lambda-repo:latest
+docker push <aws_account_id>.dkr.ecr.eu-west-1.amazonaws.com/fasttransfer-lambda-repo:latest
 ```
+
+## 5. Create a Lambda Function with the Docker Image
+
+Create a Lambda function using the Docker image you've just pushed:
+
+```bash
+aws lambda create-function \
+  --function-name FastTransferLambda \
+  --package-type Image \
+  --image-uri <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/fasttransfer-lambda-repo:latest \
+  --role arn:aws:iam::<aws_account_id>:role/<lambda_execution_role> \
+  --timeout 120 \
+  --memory-size 5000 \
+  --ephemeral-storage 10000
+```
+Replace `<aws_account_id>` with your AWS account ID and `<lambda_execution_role>` with the IAM role that has the necessary permissions to run Lambda.
+
+## Environment Variables
+
+Here are the environment variables you need to set in your Dockerfile or Lambda:
+
+- **HOME**: Sets the default working directory.
+- **DOTNET_BUNDLE_EXTRACT_BASE_DIR**: Temporary directory for extracted files.
+
