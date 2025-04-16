@@ -1,0 +1,20 @@
+{
+    "sourceconnectiontype": "mssql",
+    "sourceserver": "database-mssql.xxxxxxx.eu-west-1.rds.amazonaws.com",
+    "sourceuser": "xxxxxxx",
+    "sourcepassword": "xxxxxx",
+    "sourcedatabase": "WIKIPEDIA",
+    "sourceschema": "dbo",
+    "sourcetable": "dbpedia_14_10K",
+    "targetconnectiontype": "pgsql",
+    "targetserver": "database-postgres.xxxxxx.eu-west-1.rds.amazonaws.com",
+    "targetuser": "xxxxxxx",
+    "targetpassword": "xxxxxx",
+    "targetdatabase": "postgres",
+    "targetschema": "public",
+    "targettable": "dbpediamini",
+    "method": "None",
+    "loadmode": "Truncate",
+    "batchsize": "1048576",
+    "settingsfile": "/var/task/FastTransfer_Settings.json"
+  }
