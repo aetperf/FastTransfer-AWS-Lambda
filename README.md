@@ -145,3 +145,11 @@ Licensed under MIT License - https://opensource.org/licenses/MIT
 ## Contact
 For more information or if you have any questions, feel free to contact the author, Pierre-Antoine Collet.
 
+## License
+```csharp
+Copyright (c) 2025 by Pierre-Antoine Collet  
+Licensed under MIT License - https://opensource.org/licenses/MIT
+```
+
+## Contact
+For more information or if you have any questions, feel free to contact the author, Pierre-Antoine Collet.
