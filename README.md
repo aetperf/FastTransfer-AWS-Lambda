@@ -95,3 +95,11 @@ Here are the environment variables you need to set in your Dockerfile or Lambda:
 - **HOME**: Sets the default working directory.
 - **DOTNET_BUNDLE_EXTRACT_BASE_DIR**: Temporary directory for extracted files.
 
+## License
+```csharp
+Copyright (c) 2025 by Pierre-Antoine Collet  
+Licensed under MIT License - https://opensource.org/licenses/MIT
+```
+
+## Contact
+For more information or if you have any questions, feel free to contact the author, Pierre-Antoine Collet.
