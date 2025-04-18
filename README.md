@@ -14,7 +14,7 @@ This guide walks through the steps needed to build a Docker image containing the
 
 Make sure you have the following files in your project directory:
 
-- [**FastTransfer**](./FastTransfer): The compiled binary of `FastTransfer` ([documentation](https://aetperf.github.io/FastTransfer-Documentation/))
+- [**FastTransfer**](https://aetperf.github.io/FastTransfer-Documentation/): The compiled binary of `FastTransfer` ([documentation](https://aetperf.github.io/FastTransfer-Documentation/))
 - [**FastTransfer_Settings.json**](./FastTransfer_Settings.json): Optional configuration file used by `FastTransfer`
 - [**handler.py**](./handler.py): Python script that controls the binary execution from within the Lambda
 - [**Dockerfile**](./Dockerfile): Builds a container image for the Lambda
