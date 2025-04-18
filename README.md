@@ -79,6 +79,8 @@ If you want to securely store sensitive parameters such as database passwords or
 
 Your secret should contain a **JSON object** where each key corresponds to a parameter used by the Lambda function (e.g. `sourcepassword`, `sourceserver`, etc.).
 
+You can then choose to create **one secret** for **one data source** or put everything in a **single secret** and therefore have a **source/target relationship**
+
 ### ✅ Example secret value (JSON format):
 ```json
 {
@@ -86,6 +88,14 @@ Your secret should contain a **JSON object** where each key corresponds to a par
   "sourceserver": "YourSourceServer"
 }
 ```
+### 📦 Create the secret via AWS CLI:
+```bash
+aws secretsmanager create-secret 
+--name FastTransferSecrets 
+--description "Secrets for FastTransfer Lambda execution" 
+--secret-string '{"sourcepassword":"YourSourcePassword","targetpassword":"YourTargetPassword"}'
+```
+aws secretsmanager create-secret --name FastTransferSecrets --description "Secrets for FastTransfer Lambda execution" --secret-string '{"sourcepassword":"YourSourcePassword","targetpassword":"YourTargetPassword"}'
 💡 You can reuse the same secret for multiple parameters. Just make sure the keys match the names of the parameters used in your Lambda event.
 
 ## 🛠 4. Create the Lambda Function (one time)
