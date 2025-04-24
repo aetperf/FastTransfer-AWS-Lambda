@@ -30,7 +30,7 @@ def lambda_handler(event, context):
 
     for key, value in event.items():
         if value is not None and not key.startswith("datasource"):
-            command.append(f"--{key.lower()}")
+            command.append(f"--{key}")
 
             if isinstance(value, str) and value.startswith("ref:"):
                 ref_key = value[len("ref:"):] 
